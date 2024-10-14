@@ -1,47 +1,124 @@
-<script>import "./app.css";
-import svelteLogo from './assets/svelte.svg'
-import viteLogo from '/vite.svg'
-import Counter from './lib/Counter.svelte'</script>
+<script>
+  import Navigation from './components/Navigation.svelte';
+  import Home from './components/Home.svelte';
+  import Summaries from './components/Summaries.svelte';
+  import Notes from './components/Notes.svelte';
+  import Bookmarks from './components/Bookmarks.svelte';
+  import Reviews from './components/Reviews.svelte';
+  import TestingUI from './TestingUI.svelte';
+  import { onMount } from 'svelte';
+  import {
+    isIdle,
+    idleTimer,
+    resetIdleTimer,
+    handleInteraction,
+    currentPage,
+    currentChapter,
+    totalReadingTime,
+    timeSpentPerChapter,
+    simulateChapterReadingTime,
+    simulatePageReadingTime // Import from store
+  } from './store.js';
+  import { get } from 'svelte/store';
+  import { writable } from 'svelte/store';
 
-<main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src="{viteLogo}" class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src="{svelteLogo}" class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
+  // Rename currentPage to displayedPage
+  const displayedPage = writable('Home'); // Initialize with default page
 
-  <div class="card">
-    <Counter></Counter>
-  </div>
+  // Function to handle navigation
+  function navigateTo(event) {
+    displayedPage.set(event.detail); // Update to use displayedPage
+    resetIdleTimer();
+  }
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
-</main>
-
+  onMount(() => {
+    resetIdleTimer();
+    return () => clearTimeout(idleTimer);
+  });
+</script>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+  .book-container {
+    width: 600px;
+    height: 900px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    border-radius: 5px;
+    transition: background-image 0.5s ease;
+    z-index: 1000;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+
+  .book-container.idle {
+    background-image: url('./images/cover.jpg');
+    background-size: cover;
+    background-position: center;
   }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
+
+  .cover-image {
+    width: 100%;
+    height: 100%;
+    background-image: url('./images/cover.jpg');
+    background-size: cover;
+    background-position: center;
+    animation: fadeIn 0.5s ease;
   }
-  .read-the-docs {
-    color: #888;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .testing-ui-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1001; /* Above navigation */
+  }
+
+  @media (max-width: 640px) {
+    .book-container {
+      width: 100%;
+      height: 100vh;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    .testing-ui-container {
+      top: 5px;
+      right: 5px;
+    }
   }
 </style>
+
+<!-- Handle global user interactions to reset idle timer -->
+<svelte:window on:mousemove={handleInteraction} on:click={handleInteraction} on:keydown={handleInteraction} />
+
+<!-- Testing UI for controlling navigation and reading simulation -->
+<div class="testing-ui-container">
+  <TestingUI> simulateReadingTime={simulatePageReadingTime} </TestingUI>
+</div>
+
+<!-- Main Book Container -->
+<div class="book-container" class:idle={$isIdle}>
+  {#if !$isIdle}
+    <Navigation on:navigate={navigateTo} />
+    {#if $displayedPage === 'Home'}
+      <Home />
+    {:else if $displayedPage === 'Summaries'}
+      <Summaries />
+    {:else if $displayedPage === 'Notes'}
+      <Notes />
+    {:else if $displayedPage === 'Bookmarks'}
+      <Bookmarks />
+    {:else if $displayedPage === 'Reviews'}
+      <Reviews />
+    {/if}
+  {:else}
+    <div class="cover-image"></div>
+  {/if}
+</div>
