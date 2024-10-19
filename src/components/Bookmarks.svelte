@@ -37,7 +37,7 @@
       {#each $bookmarks as bookmark, index}
         <li class="bookmark-item">
             Chapter {bookmark.chapter}, Page {bookmark.page}
-            <button on:click={() => removeBookmark(index)}>Remove</button>
+            <div class="add-bookmark"><button on:click={() => removeBookmark(index)}>Remove</button></div>
         </li>
       {/each}
     </ul>

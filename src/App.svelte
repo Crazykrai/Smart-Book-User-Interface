@@ -49,7 +49,7 @@
     overflow: hidden;
     border-radius: 5px;
     transition: background-image 0.5s ease;
-    z-index: 1000;
+    z-index: 35;
   }
 
   .book-container.idle {
