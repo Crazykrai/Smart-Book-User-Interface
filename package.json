@@ -13,6 +13,7 @@
     "autoprefixer": "^10.4.20",
     "bits-ui": "^0.21.16",
     "clsx": "^2.1.1",
+    "embla-carousel-svelte": "^8.3.0",
     "lucide-svelte": "^0.453.0",
     "postcss": "^8.4.47",
     "svelte": "^4.2.18",
