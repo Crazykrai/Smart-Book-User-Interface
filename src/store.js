@@ -12,7 +12,7 @@ function createPersistedStore(key, initial) {
 }
 
 // Reading Progress Stores
-export const totalChapters = writable(20);
+export const totalChapters = writable(34);
 export const currentChapter = writable(1);
 export const totalReadingTime = writable(0);
 export const timeSpentPerChapter = writable(Array(20).fill(0));
