@@ -6,6 +6,7 @@
     import * as Dialog from "$lib/components/ui/dialog";
     import * as Select from "$lib/components/ui/select";
     import { Textarea } from "$lib/components/ui/textarea";
+    import { onMount } from 'svelte'; // Import onMount for dialog handling
 
     let averageRating = 4.7;
     let totalReviews = 299;
@@ -19,10 +20,16 @@
     let ratingEntry = {value: 1, label: '1'};
     let userReview = {text: '', score: 0}
 
+    let confirmationMessage = ''; // Add a variable for confirmation message
+
     function addReview() {
       if(userEntry != '') {
         userReview.text = userEntry;
         userReview.score = ratingEntry.value;
+        reviews.push({ rating: userReview.score, text: userReview.text }); // Save the review
+        confirmationMessage = 'Review saved successfully!'; // Set confirmation message
+        userEntry = ''; // Clear the input after saving
+        ratingEntry = { value: 1, label: '1' }; // Reset rating entry
       }
     }
 </script>
@@ -107,6 +114,9 @@
                 </Select.Content>
               </Select.Root>
               <div class="add-review mt-4"><button on:click={addReview}>Create</button></div>
+              {#if confirmationMessage}
+                <p class="confirmation">{confirmationMessage}</p> <!-- Display confirmation message -->
+              {/if}
             </div>
           </Dialog.Content>
         </Dialog.Root>

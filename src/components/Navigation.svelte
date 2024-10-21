@@ -3,12 +3,6 @@
   const dispatch = createEventDispatcher();
   let menuOpen = false;
 
-  // Import preview components
-  import HomePreview from './preview/HomePreview.svelte';
-  import SummariesPreview from './preview/SummariesPreview.svelte';
-  import NotesPreview from './preview/NotesPreview.svelte';
-  import BookmarksPreview from './preview/BookmarksPreview.svelte';
-  import ReviewsPreview from './preview/ReviewsPreview.svelte';
 
   function toggleMenu() {
     console.log("Hamburger clicked"); // Debugging line
@@ -94,23 +88,18 @@
     <div class="menu">
       <button type="button" class="menu-item" on:click={() => navigate('Home')}>
         Home
-        <div class="preview"><HomePreview progress={50} /></div>
       </button>
       <button type="button" class="menu-item" on:click={() => navigate('Summaries')}>
         Summaries
-        <div class="preview"><SummariesPreview summaryCount={2} /></div>
       </button>
       <button type="button" class="menu-item" on:click={() => navigate('Notes')}>
         Notes
-        <div class="preview"><NotesPreview noteCount={3} /></div>
       </button>
       <button type="button" class="menu-item" on:click={() => navigate('Bookmarks')}>
         Bookmarks
-        <div class="preview"><BookmarksPreview bookmarkCount={4} /></div>
       </button>
       <button type="button" class="menu-item" on:click={() => navigate('Reviews')}>
         Reviews
-        <div class="preview"><ReviewsPreview reviewCount={2} /></div>
       </button>
     </div>
   {/if}
