@@ -65,3 +65,4 @@ AI was used in the project to speed up the overall development. While the projec
 - Add customization options for a user by letting them set a custom color scheme or organize the components on the home page to be in whatever design they want.
 
 [VIDEO](https://drive.google.com/file/d/14xM18HZr4kagZs8KvTDkHK47A7Dt8TGE/view?usp=sharing)
+[WRITE UP (includes images)](https://docs.google.com/document/d/1vAs4EvQ0mFCfxka06P97arbSyoN-C1kLbxYXU_YyoaE/edit?usp=sharing)
