@@ -1,47 +1,67 @@
-# Svelte + Vite
+# Smart Book
 
-This template should help get you started developing with Svelte in Vite.
+## Project Overview
 
-## Recommended IDE Setup
+Our smart book project is an interactive upgrade to a book designed to give a user a better reading experience through the addition of chapter summaries, notes, bookmarks, and reviews. Additionally, it will allow the user to see their current status in the book with real-time updating reading progress and time spent on each chapter.
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+## Design Work
 
-## Need an official Svelte framework?
+We wanted the design to be sleek, and easy for the user to use. We learned in our interviews that we needed the design to be very easy to use, as a book is very primitive and nearly everybody on Earth knows how to use a book. In order to do this, we started with sketching, by making a handful of normal sketches, storybook sketches, and hybrid sketches. From these, we were able to start our first prototypes.
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+### Key Goals:
+- **Simplicity**: The layout we created is clean and uncluttered, letting the user to truly focus on the content vs the design.
+- **Consistency**: The UI elements used throughout the project such as buttons, fonts, colors, etc., are used throughout the whole project giving the project a consistent look.
+- **Responsiveness**: The design adapts to different screen sizes, not limiting the trial user to any one device. The final product will be able to fit on any book, regardless of the shape or size.
+- **Accessibility**: The color contrast, fonts, and interactive components are all designed to be easily used for all users, regardless of educational background.
 
-## Technical considerations
+## Interface Details
 
-**Why use this over SvelteKit?**
+### Main Components:
+- **Hamburger Bar**  
+  While generic, the hamburger bar allows the user to easily access the other features the “smart” book has to offer.
+  
+- **Testing UI**  
+  The testing UI is simply built for the demo, allowing the user to simulate reading pages/chapters easily.
+  
+- **Progress**  
+  The progress on the home page keeps track of the last page read, along with what chapter you are on. It also has time read for both the current chapter and whole book (it is simulated at the moment, but in a real book it would be true).
+  
+- **Chapter Summaries**  
+  Shows a summary of the chapter the user is currently reading, along with all previous chapters. Allows the user to recall the general story of the book.
+  
+- **Notes**  
+  Users can add, view, or remove notes in order to have an overall better reading experience.
+  
+- **Bookmarks**  
+  Users can add bookmarks for easy referencing at another time.
+  
+- **Reviews**  
+  Users can read and leave reviews for the book.
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+## Features and Controls:
 
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+- **Book Navigation**: Users can navigate to both different pages/chapters through the testing UI on the right-hand side of the screen.
+- **Reading Simulation**: While the final product would ideally track time actually reading, the current implementation simulates reading time for each page/chapter.
+- **Notes and Bookmarks**: Users can add both notes and bookmarks, allowing the user to reference either at any time. The bookmark will be more for keeping a spot in the book you may want to visit later, while the notes will be for any specific quotes/thoughts you had about a specific chapter/page.
+- **Review System**: The review system is displayed in a carousel format, allowing the user to easily scroll through the different reviews, as well as leave their own for other readers!
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+## Implementation
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+### Libraries and Technologies
+We used only a few different libraries across the project. Firstly, we obviously used Svelte as per the project requirements. Beyond this, we used the Svelte Store for the constant state management, so we could actively share the data. Shadcn-Svelte, which includes TailwindCSS, was also used for a few components, like the pop-up dialogs, the reviews carousel, and the scrollable summaries area.
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+### Code Structure
+We organized the project into a few different components, each having their own central job:  
+- **App.svelte**: This was the home of the project. Houses the navigation and routing logic.  
+- **TestingUI.svelte**: Implements the controls for the user to simulate reading.  
+- **Components**: Includes Home.svelte, Summaries.svelte, Notes.svelte, Bookmarks.svelte, and Reviews.svelte. These files contain all the individual components for each important feature that the book has to offer.  
+- **store.js**: Handles the application’s state, including the current chapter and page, along with different user interactions such as setting a bookmark or changing the page.
 
-**Why include `.vscode/extensions.json`?**
+### AI Use:
+AI was used in the project to speed up the overall development. While the project was mostly done by us, Jacob used AI here and there to fix some general errors and increase production. He used Cursor, an up and coming AI code generation tool in order to push his ideas into production faster, along with finding different libraries/tools he wasn’t familiar with.
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+## Future Work
+- Implement live time-tracking on a user’s statistics when reading, as right now there is a set time correlated with reading a page and finishing a whole chapter. We’d like to use this to give a reader more insight into which chapters they spent the most time on and to better understand their overall reading speed.
+- Add customization options for a user by letting them set a custom color scheme or organize the components on the home page to be in whatever design they want.
 
-**Why enable `checkJs` in the JS template?**
-
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/sveltejs/svelte-hmr/tree/master/packages/svelte-hmr#preservation-of-local-state).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```js
-// store.js
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
+[VIDEO](https://drive.google.com/file/d/14xM18HZr4kagZs8KvTDkHK47A7Dt8TGE/view?usp=sharing)
